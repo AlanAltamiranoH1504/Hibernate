@@ -83,4 +83,25 @@ public interface IPersonaRepository extends CrudRepository<Persona, Integer> {
     //Ordenadmo por Apellidos
     @Query("SELECT p.nombre, p.apellidos FROM Persona p ORDER BY p.apellidos")
     List<String[]>personaPorApellidos();
+
+    //Contamos numero de usuarios
+    @Query("SELECT COUNT (p) FROM Persona p")
+    int numeroPersonas();
+
+    //Id Maximo
+    @Query("SELECT MAX (p.id) FROM Persona p")
+    int idMaximo();
+
+    // Id Minimo
+    @Query("SELECT MIN (p.id) FROM Persona p")
+    int idMinimo();
+
+    @Query("SELECT p FROM Persona p WHERE LENGTH(p.nombre) <= 5")
+    List<Persona>nombreMayorACinco();
+
+    @Query("SELECT p FROM Persona p ORDER BY LENGTH(p.apellidos) ASC LIMIT 1")
+    Persona personaNombreMasLargo();
+
+    @Query("SELECT p FROM Persona p WHERE LENGTH(p.apellidos) = (SELECT MAX(length(sub.apellidos) ) FROM Persona sub)")
+    Persona personaNombreMasLargo2();
 }

@@ -96,10 +96,27 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
 //            System.out.println("persona = " + persona);
 //        }
 
-        List<String[]>personaPorApellido = iPersonaRepository.personaPorApellidos();
-        for (var persona: personaPorApellido){
-            System.out.println("persona = " + persona[0] + " " + persona[1]);
-        }
+//        List<String[]>personaPorApellido = iPersonaRepository.personaPorApellidos();
+//        for (var persona: personaPorApellido){
+//            System.out.println("persona = " + persona[0] + " " + persona[1]);
+//        }
+
+//        int numeroPersona = iPersonaRepository.numeroPersonas();
+//        System.out.println("numeroPersona = " + numeroPersona);
+//
+//        int idMaximo = iPersonaRepository.idMaximo();
+//        System.out.println("idMaximo = " + idMaximo);
+//
+//        int idMinimo = iPersonaRepository.idMinimo();
+//        System.out.println("idMinimo = " + idMinimo);
+
+//        List<Persona>personasNombreMayorA5 = iPersonaRepository.nombreMayorACinco();
+//        for (var persona: personasNombreMayorA5){
+//            System.out.println("persona = " + persona);
+//        }
+
+        Persona persona = iPersonaRepository.personaNombreMasLargo();
+        System.out.println("persona = " + persona);
     }
 
     public void findOne() {
