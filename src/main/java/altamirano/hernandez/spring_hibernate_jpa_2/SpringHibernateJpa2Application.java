@@ -1,6 +1,7 @@
 package altamirano.hernandez.spring_hibernate_jpa_2;
 
 import altamirano.hernandez.spring_hibernate_jpa_2.entities.Persona;
+import altamirano.hernandez.spring_hibernate_jpa_2.entities.dto.PersonaDTO;
 import altamirano.hernandez.spring_hibernate_jpa_2.repostories.IPersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.ObjectError;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -24,25 +26,82 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        delete();
+        listados();
     }
 
-    @Transactional(readOnly = true)
     public void listados() {
-        List<Persona> personasPorLenguaje = iPersonaRepository.personasPorLenguaje("Java", "Alan");
-        for (var personaEncontrada : personasPorLenguaje) {
-            System.out.println("personaEncontrada = " + personaEncontrada);
-        }
+//        List<Persona> personasPorLenguaje = iPersonaRepository.personasPorLenguaje("Java", "Alan");
+//        for (var personaEncontrada : personasPorLenguaje) {
+//            System.out.println("personaEncontrada = " + personaEncontrada);
+//        }
+//
+//        List<Object[]> obtenerPersonaData = iPersonaRepository.obtenerPersonaData();
+//        for (var personaEncontrada : obtenerPersonaData) {
+//            System.out.println("Nombre Persona = " + personaEncontrada[0]);
+//            System.out.println("Lenguaje de la Persona: = " + personaEncontrada[1]);
+//            System.out.println();
+//        }
 
-        List<Object[]> obtenerPersonaData = iPersonaRepository.obtenerPersonaData();
-        for (var personaEncontrada : obtenerPersonaData) {
-            System.out.println("Nombre Persona = " + personaEncontrada[0]);
-            System.out.println("Lenguaje de la Persona: = " + personaEncontrada[1]);
-            System.out.println();
+//        List<Object[]> personaDataFul = iPersonaRepository.obtenerPersonaDataFull();
+//        for(var persona: personaDataFul){
+//            System.out.println("ID: " + persona[0]);
+//            System.out.println("Nombre: " + persona[1]);
+//            System.out.println("Apellidos: " + persona[2]);
+//            System.out.println("Lenguaje de Programacion: " + persona[3]);
+//            System.out.println();
+//        }
+
+//        List<Object[]>findAllMixPersona = iPersonaRepository.findAllMixPersona();
+//        for (var persona: findAllMixPersona){
+//            System.out.println("Id persona = " + persona[1]);
+//            System.out.println("Persona Completa: " + persona[0]);
+//        }
+
+//        List<PersonaDTO>findAllDto = iPersonaRepository.findAllDto();
+//        for (var persona: findAllDto) {
+//            System.out.println("persona = " + persona);
+//            System.out.println();
+//        }
+
+//        List<String>findAllNombresUnicos = iPersonaRepository.findAllNombresUnicos();
+//        for (var nombre: findAllNombresUnicos){
+//            System.out.println("nombre = " + nombre);
+//        }
+
+//        List<String>findAllLeguajesUnicos = iPersonaRepository.findAllLenguajesUnicos();
+//        for (var lenguaje: findAllLeguajesUnicos){
+//            System.out.println("lenguaje = " + lenguaje);
+//        }
+//
+//        int lenguajesUnicos = iPersonaRepository.lenguajesUnicos();
+//        System.out.println("lenguajesUnicos = " + lenguajesUnicos);
+
+//        List<String>nombresUpper = iPersonaRepository.nombresUpper();
+//        for (var nombre: nombresUpper){
+//            System.out.println("nombre = " + nombre);
+//        }
+
+//        List<String>nombreLower = iPersonaRepository.nombresLower();
+//        for (var name: nombreLower) {
+//            System.out.println("name = " + name);
+//        }
+
+//        List<Persona>personasBetween = iPersonaRepository.personasBetween(1, 5);
+//        for (var persona: personasBetween){
+//            System.out.println("persona = " + persona);
+//        }
+
+//        List<Persona>personasOrdenadasPorLenguaje = iPersonaRepository.personasOrdenadasPorLenguaje();
+//        for (var persona: personasOrdenadasPorLenguaje){
+//            System.out.println("persona = " + persona);
+//        }
+
+        List<String[]>personaPorApellido = iPersonaRepository.personaPorApellidos();
+        for (var persona: personaPorApellido){
+            System.out.println("persona = " + persona[0] + " " + persona[1]);
         }
     }
 
-    @Transactional(readOnly = true)
     public void findOne() {
         //Econtramos persona por ID
         Persona persona = iPersonaRepository.findById(1).orElse(null);
@@ -69,7 +128,6 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
 //        }
     }
 
-    @Transactional(readOnly = false)
     public void insert() {
         //Insertamos nuevo registro
 //        Persona persona6 = new Persona("Itzel", "Altamirano Hernandez", "CSS");
@@ -89,7 +147,6 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
         System.out.println("persona7Guardada = " + persona7Guardada);
     }
 
-    @Transactional(readOnly = false)
     public void update(){
 //        Persona persona = iPersonaRepository.findById(7).orElse(null);
 //        if (persona != null){
@@ -103,7 +160,6 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
         }
     }
 
-    @Transactional(readOnly = false)
     public void delete(){
         Persona persona = iPersonaRepository.findById(3).orElse(null);
 //        if (persona != null){
