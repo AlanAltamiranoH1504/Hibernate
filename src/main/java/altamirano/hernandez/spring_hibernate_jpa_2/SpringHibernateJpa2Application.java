@@ -26,7 +26,7 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        cicloDeVida();
+        insert();
     }
 
     public void listados() {

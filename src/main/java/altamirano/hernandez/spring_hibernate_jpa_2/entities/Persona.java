@@ -15,42 +15,16 @@ public class Persona {
     private String apellidos;
     @Column(name = "lenguaje_de_programacion")
     private String lenguajeDeProgramacion;
-    @Column(name = "creat_at")
-    private LocalDateTime creatAt;
-    @Column(name = "update_at")
-    private LocalDateTime updatetAt;
-    @Column(name = "delete_at")
-    private LocalDateTime deletetAt;
+    @Embedded
+    private Audith audith = new Audith();
 
     //Constructores
     public Persona() {
     }
-
     public Persona(String nombre, String apellidos, String lenguajeDeProgramacion) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.lenguajeDeProgramacion = lenguajeDeProgramacion;
-    }
-
-    //Metodos del ciclo de vida
-    @PrePersist
-    public void prePersist(){
-        System.out.println("Evento del ciclo de vida del Entity. Antes de guardarlo en la DB");
-    }
-    @PostPersist
-    public void postPersist(){
-        System.out.println("Evento del ciclo de vida del Entity. Despues de guardarlo en la DB");
-        this.creatAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        System.out.println("Evento del ciclo de vida del Entity. Antes de actualizarlo en la DB");
-    }
-    @PostUpdate
-    public void postUpdate(){
-        System.out.println("Evento del ciclo de vida del Entity. Despues de actualizarlo en la DB");
-        this.updatetAt = LocalDateTime.now();
     }
     //Metodos Get y Set
     public int getId() {
@@ -99,6 +73,8 @@ public class Persona {
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", lenguajeDeProgramacion='" + lenguajeDeProgramacion + '\'' +
+                ", createAt='" + audith.getCreatAt() + '\'' +
+                ", updateAt='" + audith.getUpdatetAt() + '\'' +
                 '}';
     }
 }
