@@ -2,7 +2,6 @@ package altamirano.hernandez.spring_hibernate_jpa_2.repostories;
 
 import altamirano.hernandez.spring_hibernate_jpa_2.entities.Persona;
 import altamirano.hernandez.spring_hibernate_jpa_2.entities.dto.PersonaDTO;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IPersonaRepository extends CrudRepository<Persona, Integer> {
 
@@ -57,51 +55,64 @@ public interface IPersonaRepository extends CrudRepository<Persona, Integer> {
     List<String>findAllNombresUnicos();
 
     //Lista los lenguaje de prrogramacion unicos
+    @Transactional(readOnly = true)
     @Query("SELECT DISTINCT p.lenguajeDeProgramacion FROM Persona p")
     List<String>findAllLenguajesUnicos();
 
     //Cantidad de lenguajes unicos
+    @Transactional(readOnly = true)
     @Query("SELECT COUNT (DISTINCT p.lenguajeDeProgramacion) FROM Persona p")
     int lenguajesUnicos();
 
     //Nombres en Mayusculas
+    @Transactional(readOnly = true)
     @Query("SELECT DISTINCT UPPER(CONCAT(p.nombre, ' ', p.apellidos)) FROM Persona p")
     List<String>nombresUpper();
 
     //Nombres en Minusculas
+    @Transactional(readOnly = true)
     @Query("SELECT DISTINCT LOWER(CONCAT(p.nombre, ' ', p.apellidos)) FROM Persona p")
     List<String>nombresLower();
 
     //Personas entre el id 1 y 5
+    @Transactional(readOnly = true)
     @Query("SELECT p FROM Persona p WHERE p.id BETWEEN :n1 AND :n2 ")
     List<Persona> personasBetween(@Param("n1")int n1, @Param("n2") int n2);
 
     //Ordenado por lenguaje de manera ascendente
+    @Transactional(readOnly = true)
     @Query("SELECT p FROM Persona p ORDER BY p.lenguajeDeProgramacion")
     List<Persona> personasOrdenadasPorLenguaje();
 
     //Ordenadmo por Apellidos
+    @Transactional(readOnly = true)
     @Query("SELECT p.nombre, p.apellidos FROM Persona p ORDER BY p.apellidos")
     List<String[]>personaPorApellidos();
 
     //Contamos numero de usuarios
+    @Transactional(readOnly = true)
     @Query("SELECT COUNT (p) FROM Persona p")
     int numeroPersonas();
 
     //Id Maximo
+    @Transactional(readOnly = true)
     @Query("SELECT MAX (p.id) FROM Persona p")
     int idMaximo();
 
     // Id Minimo
+    @Transactional(readOnly = true)
     @Query("SELECT MIN (p.id) FROM Persona p")
     int idMinimo();
 
+    @Transactional(readOnly = true)
     @Query("SELECT p FROM Persona p WHERE LENGTH(p.nombre) <= 5")
     List<Persona>nombreMayorACinco();
 
+    @Transactional(readOnly = true)
     @Query("SELECT p FROM Persona p ORDER BY LENGTH(p.apellidos) ASC LIMIT 1")
     Persona personaNombreMasLargo();
 
+    @Transactional(readOnly = true)
     @Query("SELECT p FROM Persona p WHERE LENGTH(p.apellidos) = (SELECT MAX(length(sub.apellidos) ) FROM Persona sub)")
     Persona personaNombreMasLargo2();
 }

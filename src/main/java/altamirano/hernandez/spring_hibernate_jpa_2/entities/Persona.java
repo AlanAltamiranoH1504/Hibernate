@@ -2,6 +2,7 @@ package altamirano.hernandez.spring_hibernate_jpa_2.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,12 @@ public class Persona {
     private String apellidos;
     @Column(name = "lenguaje_de_programacion")
     private String lenguajeDeProgramacion;
+    @Column(name = "creat_at")
+    private LocalDateTime creatAt;
+    @Column(name = "update_at")
+    private LocalDateTime updatetAt;
+    @Column(name = "delete_at")
+    private LocalDateTime deletetAt;
 
     //Constructores
     public Persona() {
@@ -25,6 +32,26 @@ public class Persona {
         this.lenguajeDeProgramacion = lenguajeDeProgramacion;
     }
 
+    //Metodos del ciclo de vida
+    @PrePersist
+    public void prePersist(){
+        System.out.println("Evento del ciclo de vida del Entity. Antes de guardarlo en la DB");
+    }
+    @PostPersist
+    public void postPersist(){
+        System.out.println("Evento del ciclo de vida del Entity. Despues de guardarlo en la DB");
+        this.creatAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        System.out.println("Evento del ciclo de vida del Entity. Antes de actualizarlo en la DB");
+    }
+    @PostUpdate
+    public void postUpdate(){
+        System.out.println("Evento del ciclo de vida del Entity. Despues de actualizarlo en la DB");
+        this.updatetAt = LocalDateTime.now();
+    }
     //Metodos Get y Set
     public int getId() {
         return id;

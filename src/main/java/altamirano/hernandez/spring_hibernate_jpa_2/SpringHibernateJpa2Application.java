@@ -26,7 +26,7 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        listados();
+        cicloDeVida();
     }
 
     public void listados() {
@@ -185,6 +185,47 @@ public class SpringHibernateJpa2Application implements CommandLineRunner {
 //        }
         if (persona != null){
             iPersonaRepository.deleteById(persona.getId());
+        }
+    }
+
+    public void cicloDeVida(){
+        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Ingresa el nombre de la persona: ");
+//        var nombre = scanner.nextLine();
+//        System.out.print("Ingresa los apellidos de la persona: ");
+//        var apellidos = scanner.nextLine();
+//        System.out.println("Ingresa el lenguaje de programacion de la persona: ");
+//        var lenguaje = scanner.nextLine();
+//        Persona persona1 = new Persona(nombre, apellidos, lenguaje);
+//        iPersonaRepository.save(persona1);
+
+        System.out.println("Ingresa el ID de la persona a actualizar: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        Persona persona = iPersonaRepository.findById(id).orElse(null);
+        if (persona != null){
+            System.out.println("Ingresa el nuevo nombre: ");
+            var nombre = scanner.nextLine();
+            System.out.println("Ingresa los nuevos apellidos: ");
+            var apellidos = scanner.nextLine();
+            System.out.println("Ingresa el lenguaje de programacion: ");
+            var lenguaje = scanner.nextLine();
+
+            if (nombre == null || nombre == ""){
+                persona.setNombre(persona.getNombre());
+            }else{
+                persona.setNombre(nombre);
+            }
+            if (apellidos == null || apellidos == ""){
+                persona.setApellidos(persona.getApellidos());
+            }else{
+                persona.setApellidos(apellidos);
+            }
+            if (lenguaje == null || lenguaje == ""){
+                persona.setLenguajeDeProgramacion(persona.getLenguajeDeProgramacion());
+            }else{
+                persona.setLenguajeDeProgramacion(lenguaje);
+            }
+            iPersonaRepository.save(persona);
         }
     }
 }
